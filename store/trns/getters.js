@@ -26,13 +26,32 @@ export default {
     const trnsItems = rootState.trns.items
     const rates = rootState.currencies.rates
     const walletsItems = rootState.wallets.items
-    const categoriesItems = rootState.wallets.items
+    const categoriesItems = rootState.categories.items
     const baseRate = rootState.currencies.base
     const transferCategoriesIds = getTransferCatgoryIds(categoriesItems)
 
     let total = 0
 
-    if (inculdeTrnasfers && isConvertToBase) {
+    if (walletId) {
+      total = getTotal({
+        transferCategoriesIds,
+        trnsIds,
+        trnsItems,
+        walletsItems,
+        walletsIds: [walletId],
+      })
+
+      return {
+        expense: total.expenseTransactions + total.expenseTransfers,
+        income: total.incomeTransactions + total.incomeTransfers,
+        sum: total.sumTransactions + total.sumTransfers,
+        // @deprecated
+        expenses: total.expenseTransactions + total.expenseTransfers,
+        incomes: total.incomeTransactions + total.incomeTransfers,
+        total: total.sumTransactions + total.sumTransfers,
+      }
+    }
+    else if (inculdeTrnasfers && isConvertToBase) {
       total = getTotal({
         baseRate,
         rates,

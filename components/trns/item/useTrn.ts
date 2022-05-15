@@ -17,8 +17,10 @@ export default function useTrn() {
 
       // Category
       const category = categories.items[trn.categoryId]
-      if (!category)
-        return 'Category not found'
+      if (!category) {
+        console.log('Category not found', trn)
+        return `Category not found ${trn}`
+      }
 
       // Parent category
       let categoryParent = null

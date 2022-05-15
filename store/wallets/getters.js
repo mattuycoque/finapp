@@ -9,6 +9,7 @@ export default {
     return false
   },
 
+  // TODO: refactor
   walletsTotal(state, getters, rootState, rootGetters) {
     if (!getters.hasWallets)
       return {}

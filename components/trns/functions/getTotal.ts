@@ -5,7 +5,7 @@ import { TrnType } from '~/components/trns/types'
 
 const fixed = 4
 
-function getAmountInBaseRate({
+export function getAmountInBaseRate({
   amount,
   currency,
   baseRate,
@@ -25,7 +25,7 @@ function getAmountInBaseRate({
   return amount
 }
 
-function getFixedAmount({ amount, fixed }: { amount: number; fixed: number }) {
+export function getFixedAmount({ amount, fixed }: { amount: number; fixed: number }) {
   return +amount.toFixed(fixed)
 }
 
@@ -124,19 +124,19 @@ export function getTotal({
 
     // Transfer @deprecated
     else if (trn.type === TrnType.Transfer && 'walletFromId' in trn) {
-      const incomeWallet = walletsItems[trn.walletFromId]
-      const expenseWallet = walletsItems[trn.walletToId]
+      const incomeWallet = walletsItems[trn.walletToId]
+      const expenseWallet = walletsItems[trn.walletFromId]
       const incomeAmount = getFormatedAmount(trn.amountTo, incomeWallet.currency)
       const expenseAmount = getFormatedAmount(trn.amountFrom, expenseWallet.currency)
 
       // Include only selected wallets
       if (walletsIds && walletsIds.length > 0) {
         // Income
-        if (walletsIds.includes(trn.walletFromId))
+        if (walletsIds.includes(trn.walletToId))
           incomeTransfers += incomeAmount
 
         // Expense
-        else if (walletsIds.includes(trn.walletToId))
+        else if (walletsIds.includes(trn.walletFromId))
           expenseTransfers += expenseAmount
       }
 
