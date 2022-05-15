@@ -24,4 +24,16 @@ export const walletsItems = {
     currency: 'RUB',
     name: 'Wallet One Transaction RUB',
   } as WalletItem,
+
+  walletDeprecatedTransferIncome: {
+    color: 'yellow',
+    currency: 'RUB',
+    name: 'Wallet for deprecated Transfer income',
+  } as WalletItem,
+
+  walletDeprecatedTransferExpense: {
+    color: 'yellow',
+    currency: 'RUB',
+    name: 'Wallet for deprecated Transfer expense',
+  } as WalletItem,
 }

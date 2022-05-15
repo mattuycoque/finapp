@@ -97,8 +97,8 @@ export function getTotal({
       }
     }
 
-    // Transfer
-    else if (trn.type === TrnType.Transfer) {
+    // Transfer v2
+    else if (trn.type === TrnType.Transfer && 'incomeWalletId' in trn) {
       const incomeWallet = walletsItems[trn.incomeWalletId]
       const expenseWallet = walletsItems[trn.expenseWalletId]
       const incomeAmount = getFormatedAmount(trn.incomeAmount, incomeWallet.currency)
@@ -112,6 +112,31 @@ export function getTotal({
 
         // Expense
         else if (walletsIds.includes(trn.expenseWalletId))
+          expenseTransfers += expenseAmount
+      }
+
+      // Include all wallets
+      else {
+        incomeTransfers += incomeAmount
+        expenseTransfers += expenseAmount
+      }
+    }
+
+    // Transfer @deprecated
+    else if (trn.type === TrnType.Transfer && 'walletFromId' in trn) {
+      const incomeWallet = walletsItems[trn.walletFromId]
+      const expenseWallet = walletsItems[trn.walletToId]
+      const incomeAmount = getFormatedAmount(trn.amountTo, incomeWallet.currency)
+      const expenseAmount = getFormatedAmount(trn.amountFrom, expenseWallet.currency)
+
+      // Include only selected wallets
+      if (walletsIds && walletsIds.length > 0) {
+        // Income
+        if (walletsIds.includes(trn.walletFromId))
+          incomeTransfers += incomeAmount
+
+        // Expense
+        else if (walletsIds.includes(trn.walletToId))
           expenseTransfers += expenseAmount
       }
 

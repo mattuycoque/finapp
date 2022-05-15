@@ -27,6 +27,15 @@ describe('Get Transactions IDs', () => {
     ])
   })
 
+  it('Get Transactions IDs in Wallets with deprecated Transfers', () => {
+    const walletsIds = ['walletDeprecatedTransferIncome', 'walletDeprecatedTransferExpense']
+    const trnsIds = getTrnsIds({ walletsIds, trnsItems })
+
+    expect(trnsIds).toEqual([
+      'transferOLDExpenseWalletTransfer250',
+    ])
+  })
+
   it('Get All Transactions', () => {
     const trnsIds = getTrnsIds({ trnsItems })
 
@@ -40,6 +49,7 @@ describe('Get Transactions IDs', () => {
       'transferExpenseWalletCashUSD10IncomeWalletRUB700',
       'transferCategoryNameIncomeWalletCashUSD30',
       'transferCategoryIdExpenseWalletCashUSD30',
+      'transferOLDExpenseWalletTransfer250',
     ])
   })
 })

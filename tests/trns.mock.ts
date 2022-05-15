@@ -1,5 +1,5 @@
 import { TrnType } from '~/components/trns/types'
-import type { TrnTransaction, TrnTransfer } from '~/components/trns/types'
+import type { TrnTransaction, TrnTransfer, TrnTransferOld } from '~/components/trns/types'
 
 export const trnsItems = {
   transactionIncomeWalletCashUSD1000: {
@@ -71,5 +71,13 @@ export const trnsItems = {
     walletId: 'walletCashUSD',
   } as TrnTransaction,
 
-  // @deprecated: use New Transaction type instead or transfer Category ID
+  // @deprecated: use New Transaction type instead or Transfer CategoryId
+  transferOLDExpenseWalletTransfer250: {
+    categoryId: 'transfer',
+    type: TrnType.Transfer,
+    amountFrom: 250,
+    walletFromId: 'walletDeprecatedTransferIncome',
+    amountTo: 250,
+    walletToId: 'walletDeprecatedTransferExpense',
+  } as TrnTransferOld,
 }
