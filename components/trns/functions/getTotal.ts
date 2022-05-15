@@ -3,8 +3,6 @@ import type { TrnID, TrnItem } from '~/components/trns/types'
 import type { WalletID, WalletItem } from '~~/components/wallets/types'
 import { TrnType } from '~/components/trns/types'
 
-const fixed = 4
-
 export function getAmountInBaseRate({
   amount,
   currency,
@@ -20,12 +18,12 @@ export function getAmountInBaseRate({
     return amount
 
   else if (baseRate !== currency)
-    return Math.abs(amount / rates[currency] * rates[baseRate])
+    return amount / rates[currency] * rates[baseRate]
 
   return amount
 }
 
-export function getFixedAmount({ amount, fixed }: { amount: number; fixed: number }) {
+export function getFixedAmount(amount: number, fixed = 10): number {
   return +amount.toFixed(fixed)
 }
 
@@ -47,20 +45,12 @@ export function getTotal({
   walletsItems: Record<WalletID, WalletItem>
 }) {
   function getFormatedAmount(amount: number, currency: string) {
-    let formatedAmount = 0
-    formatedAmount = getAmountInBaseRate({
+    return getAmountInBaseRate({
       amount,
       baseRate,
       currency,
       rates,
     })
-
-    formatedAmount = getFixedAmount({
-      amount: formatedAmount,
-      fixed,
-    })
-
-    return formatedAmount
   }
 
   // Transactions

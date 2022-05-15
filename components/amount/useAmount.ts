@@ -1,5 +1,5 @@
 import currency from 'currency.js'
-import { getAmountInBaseRate, getFixedAmount } from '~/components/trns/functions/getTotal'
+import { getAmountInBaseRate } from '~/components/trns/functions/getTotal'
 
 function getCurrencySymbol(currency) {
   switch (currency) {
@@ -18,10 +18,10 @@ function getCurrencySymbol(currency) {
   }
 }
 
-const formatAmount = (value, separator = ' ') =>
+const formatAmount = (value, separator = ' ', precision = 2) =>
   currency(value, {
     symbol: '',
-    precision: 0,
+    precision,
     pattern: '#',
     separator,
   }).format()
@@ -41,7 +41,7 @@ export default function useAmount() {
     })
 
     if (noFormat)
-      return getFixedAmount({ amount: amountInBaseRate, fixed: 2 })
+      return amountInBaseRate
 
     return formatAmount(amountInBaseRate)
   }

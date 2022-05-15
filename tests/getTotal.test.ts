@@ -42,9 +42,9 @@ describe('Total of Transactions', () => {
       walletsItems,
     })
 
-    expect(total.incomeTransactions).toEqual(10.8108)
+    expect(total.incomeTransactions).toEqual(10.81081081081081)
     expect(total.expenseTransactions).toEqual(0)
-    expect(total.sumTransactions).toEqual(10.8108)
+    expect(total.sumTransactions).toEqual(10.81081081081081)
     expect(total.incomeTransfers).toEqual(0)
     expect(total.expenseTransfers).toEqual(0)
     expect(total.sumTransfers).toEqual(0)
@@ -63,9 +63,9 @@ describe('Total of Transactions', () => {
       walletsItems,
     })
 
-    expect(total.incomeTransactions).toEqual(10.3831)
+    expect(total.incomeTransactions).toEqual(10.383135135135134)
     expect(total.expenseTransactions).toEqual(0)
-    expect(total.sumTransactions).toEqual(10.3831)
+    expect(total.sumTransactions).toEqual(10.383135135135134)
     expect(total.incomeTransfers).toEqual(0)
     expect(total.expenseTransfers).toEqual(0)
     expect(total.sumTransfers).toEqual(0)
@@ -111,9 +111,9 @@ describe('Total of Transactions', () => {
       walletsItems,
     })
 
-    expect(total.incomeTransactions).toEqual(10.3831)
+    expect(total.incomeTransactions).toEqual(10.383135135135134)
     expect(total.expenseTransactions).toEqual(384.176)
-    expect(total.sumTransactions).toEqual(-373.7929)
+    expect(total.sumTransactions).toEqual(-373.79286486486484)
     expect(total.incomeTransfers).toEqual(0)
     expect(total.expenseTransfers).toEqual(0)
     expect(total.sumTransfers).toEqual(0)
