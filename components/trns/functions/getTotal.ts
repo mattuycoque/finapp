@@ -23,10 +23,6 @@ export function getAmountInBaseRate({
   return amount
 }
 
-export function getFixedAmount(amount: number, fixed = 10): number {
-  return +amount.toFixed(fixed)
-}
-
 export function getTotal({
   baseRate,
   rates,
