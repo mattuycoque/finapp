@@ -32,7 +32,7 @@ describe('Get Transactions IDs', () => {
     const trnsIds = getTrnsIds({ walletsIds, trnsItems })
 
     expect(trnsIds).toEqual([
-      'transferOLDExpenseWalletTransfer250',
+      'transferOLDExpense2500Income3500',
     ])
   })
 
@@ -49,7 +49,7 @@ describe('Get Transactions IDs', () => {
       'transferExpenseWalletCashUSD10IncomeWalletRUB700',
       'transferCategoryNameIncomeWalletCashUSD30',
       'transferCategoryIdExpenseWalletCashUSD30',
-      'transferOLDExpenseWalletTransfer250',
+      'transferOLDExpense2500Income3500',
     ])
   })
 })

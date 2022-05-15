@@ -72,12 +72,12 @@ export const trnsItems = {
   } as TrnTransaction,
 
   // @deprecated: use New Transaction type instead or Transfer CategoryId
-  transferOLDExpenseWalletTransfer250: {
+  transferOLDExpense2500Income3500: {
     categoryId: 'transfer',
     type: TrnType.Transfer,
-    amountFrom: 250,
-    walletFromId: 'walletDeprecatedTransferIncome',
-    amountTo: 250,
-    walletToId: 'walletDeprecatedTransferExpense',
+    amountFrom: 2500,
+    walletFromId: 'walletDeprecatedTransferExpense',
+    amountTo: 3500,
+    walletToId: 'walletDeprecatedTransferIncome',
   } as TrnTransferOld,
 }
