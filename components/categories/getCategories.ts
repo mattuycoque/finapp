@@ -10,3 +10,13 @@ export function getCatsIds(catsIds, catsItems) {
 
   return ids
 }
+
+export function getTransferCatgoryIds(categoriesItems) {
+  const categoriesIdsByName = Object.keys(categoriesItems)
+    .filter(id =>
+      categoriesItems[id].name.toLowerCase() === 'перевод'
+      || categoriesItems[id].name.toLowerCase() === 'transfer',
+    )
+
+  return [...categoriesIdsByName, 'transfer']
+}
