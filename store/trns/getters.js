@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
-import { getCatsIds } from '~/components/categories/getCategories'
+import { getCatsIds, getTransferCatgoryIds } from '~/components/categories/getCategories'
+import { getTotal } from '~/components/trns/functions/getTotal'
 import { getTrnsIds } from '~/components/trns/functions/getTrns'
 
 export default {
@@ -13,7 +14,7 @@ export default {
 
   /**
     * Return total amounts of trnsIds
-    * * Refactor: params should be Object
+    * * TODO: need full refactor
     *
     * @param {Array} trnsIds
     * @return {Object} return
@@ -21,53 +22,74 @@ export default {
     * @return {String} return.incomes
     * @return {String} return.total
   */
-  getTotalOfTrnsIds: (_state, _getters, rootState, rootGetters) => (trnsIds, inculdeTrnasfers = false, isConvertToBase = true, walletId) => {
-    const trns = rootState.trns.items
-    const currencies = rootState.currencies.rates
-    const wallets = rootState.wallets.items
-    const baseCurrency = rootState.currencies.base
-    const transferCategoryId = rootGetters['categories/transferCategoryId']
+  getTotalOfTrnsIds: (_state, _getters, rootState) => (trnsIds, inculdeTrnasfers = false, isConvertToBase = true, walletId) => {
+    const trnsItems = rootState.trns.items
+    const rates = rootState.currencies.rates
+    const walletsItems = rootState.wallets.items
+    const categoriesItems = rootState.wallets.items
+    const baseRate = rootState.currencies.base
+    const transferCategoriesIds = getTransferCatgoryIds(categoriesItems)
 
-    let expenses = 0
-    let incomes = 0
+    let total = 0
 
-    for (const key of trnsIds) {
-      const trn = trns[key]
-      if (trn && (inculdeTrnasfers || trn.categoryId !== transferCategoryId)) {
-        // Transaction
-        if (trn.type !== 2) {
-          const wallet = wallets[trn.walletId]
-          if (!wallet && currencies)
-            return
+    if (inculdeTrnasfers && isConvertToBase) {
+      total = getTotal({
+        baseRate,
+        rates,
+        transferCategoriesIds,
+        trnsIds,
+        trnsItems,
+        walletsItems,
+      })
 
-          let amount = 0
-          isConvertToBase && wallet.currency !== baseCurrency
-            ? amount = Math.abs(trn.amount / currencies[wallet.currency])
-            : amount = trn.amount
-
-          trn.type === 1
-            ? incomes = incomes + amount
-            : expenses = expenses + amount
-        }
-
-        // Transfer
-        if (trn.type === 2 && inculdeTrnasfers) {
-          if (walletId === trn.walletFromId || walletId === trn.expenseWalletId)
-            expenses = expenses + (trn.expenseAmount ? trn.expenseAmount : trn.amount)
-
-          if (walletId === trn.walletToId || walletId === trn.incomeWalletId)
-            incomes = incomes + (trn.incomeAmount ? trn.incomeAmount : trn.amount)
-        }
+      return {
+        expense: total.expenseTransactions + total.expenseTransfers,
+        income: total.incomeTransactions + total.incomeTransfers,
+        sum: total.sumTransactions + total.sumTransfers,
+        // @deprecated
+        expenses: total.expenseTransactions + total.expenseTransfers,
+        incomes: total.incomeTransactions + total.incomeTransfers,
+        total: total.sumTransactions + total.sumTransfers,
       }
     }
-    return {
-      expense: Math.abs(+expenses.toFixed(0)),
-      income: Math.abs(+incomes.toFixed(0)),
-      sum: parseInt(incomes - expenses),
-      // @deprecated
-      expenses: Math.abs(+expenses.toFixed(0)),
-      incomes: Math.abs(+incomes.toFixed(0)),
-      total: parseInt(incomes - expenses),
+    else if (inculdeTrnasfers && !isConvertToBase) {
+      total = getTotal({
+        transferCategoriesIds,
+        trnsIds,
+        trnsItems,
+        walletsItems,
+        walletsIds: [walletId],
+      })
+
+      return {
+        expense: total.expenseTransactions + total.expenseTransfers,
+        income: total.incomeTransactions + total.incomeTransfers,
+        sum: total.sumTransactions + total.sumTransfers,
+        // @deprecated
+        expenses: total.expenseTransactions + total.expenseTransfers,
+        incomes: total.incomeTransactions + total.incomeTransfers,
+        total: total.sumTransactions + total.sumTransfers,
+      }
+    }
+    else if (!inculdeTrnasfers) {
+      total = getTotal({
+        baseRate,
+        rates,
+        transferCategoriesIds,
+        trnsIds,
+        trnsItems,
+        walletsItems,
+      })
+
+      return {
+        expense: total.expenseTransactions,
+        income: total.incomeTransactions,
+        sum: total.sumTransactions,
+        // @deprecated
+        expenses: total.expenseTransactions,
+        incomes: total.incomeTransactions,
+        total: total.sumTransactions,
+      }
     }
   },
 
