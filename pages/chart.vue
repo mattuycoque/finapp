@@ -112,8 +112,6 @@ const series = computed(() => periodshey.value.map((period) => {
     walletsItems,
   })
 
-  console.log(total)
-
   return {
     date: period.date,
     trnsIds,
