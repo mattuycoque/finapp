@@ -42,7 +42,7 @@ const oldestTrnDate = getOldestTrnDate(trnsItems.value)
 /**
  * Config
  */
-const activePeriod: Ref<PeriodsNamesExeptAll> = ref('month')
+const activePeriod: Ref<PeriodsNamesExeptAll> = ref('week')
 
 /**
  * Periods
@@ -139,6 +139,7 @@ const chartOptions = computed(() => ({
     type: 'category',
     data: series.value.map(period => dayjs(period.date).format('DD MMMM')),
   },
+
   series: [{
     name: 'Income',
     type: 'bar',
@@ -167,9 +168,21 @@ const chartOptions = computed(() => ({
       color: '#c1c1c1',
     },
   }],
+
   tooltip: {
     valueFormatter: value => `${formatAmount(value)} ${getCurrencySymbol(baseCurrency.value)}`,
   },
+
+  dataZoom: [{
+    type: 'inside',
+    start: 50,
+    end: 100,
+  }, {
+    start: 0,
+    end: 0,
+  }],
+
+  legend: {},
 }))
 
 /**
@@ -212,12 +225,13 @@ const chartData = computed(() => _merge(JSON.parse(JSON.stringify(options)), cha
   h1 maxPeriodsNumber
   pre {{ maxPeriodsNumber }}
 
-  .p-3
-    ChartBase.h-52(
+  .my-6.mx-2.py-2.rounded-lg.bg-skin-item-main-bg.border.dark_border-neutral-800
+    ChartBase.h-80(
       @finished="finished"
       :option="chartData"
     )
 
+  .my-6.mx-2
     h1 {{ trnsIds.length }}
 
     h1 chartOptions.xAxis

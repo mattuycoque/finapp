@@ -5,30 +5,38 @@ import { BarChart, LineChart } from 'echarts/charts'
 import VChart from 'vue-echarts'
 
 import {
+  DataZoomComponent,
+  DataZoomInsideComponent,
+  DataZoomSliderComponent,
   GridComponent,
+  LegendComponent,
   MarkAreaComponent,
   MarkLineComponent,
   TooltipComponent,
 } from 'echarts/components'
-
-use([
-  MarkLineComponent,
-  BarChart,
-  LineChart,
-  GridComponent,
-  TooltipComponent,
-  MarkAreaComponent,
-  SVGRenderer,
-])
 
 defineProps<{
   option: object
   loading?: boolean
 }>()
 
-const chart = ref()
 const emit = defineEmits(['finished', 'onClickChart'])
 
+use([
+  BarChart,
+  DataZoomComponent,
+  DataZoomInsideComponent,
+  DataZoomSliderComponent,
+  GridComponent,
+  LegendComponent,
+  LineChart,
+  MarkAreaComponent,
+  MarkLineComponent,
+  SVGRenderer,
+  TooltipComponent,
+])
+
+const chart = ref()
 function finished() {
   emit('finished', chart.value)
 }
@@ -40,11 +48,11 @@ function onClickChart(params: any) {
 
 <template lang="pug">
 VChart.w-full(
-  ref="chart"
-  :option="option"
-  autoresize
   :loading="loading"
+  :option="option"
   @finished="finished"
   @zr:click="onClickChart"
+  autoresize
+  ref="chart"
 )
 </template>

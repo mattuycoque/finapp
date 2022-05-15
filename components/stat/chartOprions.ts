@@ -61,10 +61,10 @@ export const averageLine = {
 export const options = {
   // Grid
   grid: {
-    top: '10',
+    top: '30',
     left: '10',
     right: '10',
-    bottom: '5',
+    bottom: '30',
     containLabel: true,
   },
 
